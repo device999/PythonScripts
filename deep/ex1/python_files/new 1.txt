@@ -1,0 +1,26 @@
+def l2loss(X, y, W, b):
+    """
+    implement the L2 loss function
+    X: N-by-D array of training data 
+    y: N dimensional numpy array of labels
+    W: D dimensional array of weights
+    b: scalar bias
+
+    Should return three variables:
+    (i) the l2 loss: scalar
+    (ii) the gradient with respect to W
+    (iii) the gradient with respect to b
+     """
+    loss = 0
+    gradients_w = []
+    gradients_b = []
+    prediction_array = predict(X, W, b)
+    for i in xrange(len(X)):
+        sample = X[i]
+        prediction = prediction_array[i]
+        diff = (y[i] - prediction) * sigmoid_derivative(np.dot(sample, W) + b)
+        gradient = [diff * x for x in sample]
+        gradients_w.append(gradient)
+        gradients_b.append(diff * b)
+        loss += (prediction - y[i]) ** 2
+    return loss, gradients_w, gradients_b
